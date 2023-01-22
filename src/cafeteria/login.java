@@ -5,13 +5,24 @@
  */
 package cafeteria;
 
+import conexion.conectarBD;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
  * @author Ramon
  */
 public class login extends javax.swing.JFrame {
-    private String usuario;
+    private Menu_Administrador menu_Admin;
+    private Ventas ventas;
+            
+    conectarBD con = new conectarBD();
+    Connection cn=con.conectar();
     /**
      * Creates new form login
      */
@@ -72,7 +83,10 @@ public class login extends javax.swing.JFrame {
 
         txtUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        btningresar.setText("Ingrsar");
+        btningresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/btnIngresar.png"))); // NOI18N
+        btningresar.setContentAreaFilled(false);
+        btningresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btningresar.setDefaultCapable(false);
         btningresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btningresarActionPerformed(evt);
@@ -86,19 +100,17 @@ public class login extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(btningresar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(182, 182, 182)
-                        .addComponent(jLabel4)))
-                .addContainerGap(121, Short.MAX_VALUE))
+                    .addComponent(btningresar, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(98, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(184, 184, 184))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,12 +118,12 @@ public class login extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(btningresar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addGap(18, 18, 18)
+                .addComponent(btningresar, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addGap(32, 32, 32))
         );
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/iconoL.png"))); // NOI18N
@@ -180,7 +192,48 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_minMouseClicked
 
     private void btningresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btningresarActionPerformed
-        if("cajero".equals(txtUsuario.getText()))
+        
+        int valid=0;
+        String permiso=null;
+        String nom=null;
+        
+        String SQL="select EMP_ID_USUARIO, EMP_NOMBRE, EMP_PUESTO_ID_PUESTO from usuarios where EMP_ID_USUARIO='"+txtUsuario.getText()+"' "; 
+        
+        try {
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+            
+            if(rs.next())
+            {
+                valid=1;
+                permiso=rs.getString("Puesto");
+                nom=rs.getString("Nombre");
+                
+                if(valid==1 && "Gerente".equals(permiso))
+                {
+                    Menu_Administrador obj = new Menu_Administrador();
+                    obj.lblNomAdmin.setText(nom);
+                    obj.setVisible(true);
+                    dispose();
+
+                }else if(valid==1 && "Cajero".equals(permiso)){
+                    Ventas obj = new Ventas();
+                    obj.lblNomCajero.setText(nom);
+                    obj.setVisible(true);
+                    dispose();
+                }
+                
+            } else{
+                JOptionPane.showMessageDialog(null, "Ingresa un usuario válido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Admin_Empleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /***if("cajero".equals(txtUsuario.getText()))
         {
             Ventas obj = new Ventas();
             obj.setVisible(true);
@@ -193,7 +246,7 @@ public class login extends javax.swing.JFrame {
         }else
         {
             JOptionPane.showMessageDialog(null, "Ingresa un usuario válido", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        }***/
     }//GEN-LAST:event_btningresarActionPerformed
 
     /**

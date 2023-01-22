@@ -44,7 +44,7 @@ public class Menu_Administrador extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         MEmpleados = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -89,6 +89,9 @@ public class Menu_Administrador extends javax.swing.JFrame {
             }
         });
         MMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MMenuMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 MMenuMouseExited(evt);
             }
@@ -102,6 +105,9 @@ public class Menu_Administrador extends javax.swing.JFrame {
             }
         });
         MInvent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MInventMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 MInventMouseExited(evt);
             }
@@ -142,11 +148,11 @@ public class Menu_Administrador extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(112, 112, 112));
         jLabel11.setText("Punto de venta");
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/boton-salir-a-la-aplicacion_1.png"))); // NOI18N
-        jLabel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/boton-salir-a-la-aplicacion_1.png"))); // NOI18N
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
+                btnSalirMouseClicked(evt);
             }
         });
 
@@ -214,7 +220,7 @@ public class Menu_Administrador extends javax.swing.JFrame {
                                         .addComponent(jLabel11)
                                         .addGap(50, 50, 50)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
+                        .addComponent(btnSalir)
                         .addGap(8, 8, 8)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -264,7 +270,7 @@ public class Menu_Administrador extends javax.swing.JFrame {
                                                 .addComponent(jLabel9)
                                                 .addComponent(jLabel8)))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
-                                .addComponent(jLabel12))
+                                .addComponent(btnSalir))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -279,11 +285,11 @@ public class Menu_Administrador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         login obj = new login();
         obj.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jLabel12MouseClicked
+    }//GEN-LAST:event_btnSalirMouseClicked
 
     private void minMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minMouseClicked
         this.setState(Menu_Administrador.ICONIFIED);
@@ -337,6 +343,18 @@ public class Menu_Administrador extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_MEmpleadosMouseClicked
 
+    private void MMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MMenuMouseClicked
+        Admin_Menu obj = new Admin_Menu();
+        obj.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_MMenuMouseClicked
+
+    private void MInventMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MInventMouseClicked
+        Inventario obj = new Inventario();
+        obj.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_MInventMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -377,11 +395,11 @@ public class Menu_Administrador extends javax.swing.JFrame {
     private javax.swing.JLabel MInvent;
     private javax.swing.JLabel MMenu;
     private javax.swing.JLabel MPos;
+    private javax.swing.JLabel btnSalir;
     private javax.swing.JLabel close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -389,7 +407,7 @@ public class Menu_Administrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblNomAdmin;
+    public static javax.swing.JLabel lblNomAdmin;
     private javax.swing.JLabel min;
     // End of variables declaration//GEN-END:variables
 }
